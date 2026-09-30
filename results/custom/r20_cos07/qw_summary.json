@@ -1,0 +1,18 @@
+{
+  "label": "自由パラメータ（r20_cos07）",
+  "q5_ratio": 20,
+  "q5_cos_theta_up": 0.7,
+  "q5_distance_a": 4000,
+  "q5_lattice_N": 16384,
+  "q5_T_formula_tau3": 285.7142857142857,
+  "q5_T_numeric_tau3": 285.4,
+  "q5_rel_err": 0.001100000000000108,
+  "q5_speed_over_c3_numeric": 14.015416958654521,
+  "q5_speed_over_c3_formula": 14.0,
+  "q5_base_light_time_tau3": 4000.0,
+  "q5_capture_matched": 0.9999999999768443,
+  "q5_capture_naive": 0.4999999999879912,
+  "q5_forward_weight_naive": 0.5000000000000002,
+  "q7_dx_tolerance_sigma_P90": 0.6666666666666666,
+  "q7_dt_tolerance_tau3_P90": 1.5
+}
