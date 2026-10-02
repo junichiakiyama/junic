@@ -1,0 +1,73 @@
+{
+  "name": "toy_pilot（合成モデルによるパイプライン較正）",
+  "out_dir": "results/persona/toy_pilot",
+  "models": [
+    {
+      "name": "toyA",
+      "backend": "toy",
+      "d_model": 64,
+      "n_layers": 8,
+      "seed": 1
+    },
+    {
+      "name": "toyB",
+      "backend": "toy",
+      "d_model": 96,
+      "n_layers": 12,
+      "seed": 2
+    },
+    {
+      "name": "toyC",
+      "backend": "toy",
+      "d_model": 48,
+      "n_layers": 10,
+      "seed": 3
+    }
+  ],
+  "conditions": [
+    "base",
+    "prompt",
+    "retrieval",
+    "steer_native",
+    "steer_transfer",
+    "steer_random",
+    "retrieval+steer_native"
+  ],
+  "transfer_pairs": [
+    [
+      "toyA",
+      "toyB"
+    ],
+    [
+      "toyB",
+      "toyA"
+    ],
+    [
+      "toyA",
+      "toyC"
+    ]
+  ],
+  "layers_rel": [
+    0.3,
+    0.45,
+    0.6,
+    0.75
+  ],
+  "alphas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+  ],
+  "map_kind": "ridge",
+  "contrast": "neutral",
+  "train_frac": 0.4,
+  "split_seed": 0,
+  "retrieval_k": 4,
+  "margin": 0.5,
+  "big5": true,
+  "nll": true,
+  "force": true
+}

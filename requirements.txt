@@ -2,3 +2,9 @@ numpy>=1.24
 scipy>=1.10
 matplotlib>=3.7
 pytest>=7
+pandas>=2.0
+# 疑似人格の実験で実モデルを使うとき（合成モデルとテストの一部だけなら不要）
+torch>=2.3
+transformers>=4.56
+# フロンティアモデル（Claude）のテキスト条件を使うとき
+anthropic>=1.0

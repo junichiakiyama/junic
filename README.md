@@ -68,3 +68,34 @@ warpsim/style.py      図の共通スタイル（日本語フォント、固定�
 scripts/              図と数値表を作るスクリプト
 tests/                検算
 ```
+
+---
+
+# persona_xfer — 疑似人格のモデル間保存の検証
+
+同じ人格定義を与えたとき、異なる LLM の間でその人格が「同じ人物」として保たれるかを測る実験コードです。テキスト（自己記述・判断記録）、移植先で再抽出した人物ベクトル、別モデルから写像で移植した人物ベクトルを、同じ項目・同じ統計で比べます。
+
+研究の問い・仮説・判定基準・段階計画は **[docs/persona_transfer/protocol.md](docs/persona_transfer/protocol.md)** にまとめています。
+
+```bash
+python scripts/persona_run.py configs/persona/toy_pilot.json     # 合成モデルでのパイプライン較正（CPU、約2分）
+python scripts/persona_run.py configs/persona/pilot_small.json   # Phase 1：小型オープンモデル（GPU）
+python -m pytest -q tests/test_persona_xfer.py
+```
+
+| 設定 | 内容 |
+|---|---|
+| `configs/persona/toy_pilot.json` | 合成モデル3つ（効果を構成上与えた較正用。結果は科学的知見ではない） |
+| `configs/persona/pilot_small.json` | Qwen2.5-1.5B/3B、Llama-3.2-3B |
+| `configs/persona/main_7b.json` | Llama-3.1-8B、Qwen2.5-7B/3B、Gemma-2-9B、Mistral-7B（`alphas` は Phase 1 の後に確定） |
+| `configs/persona/frontier_text.json` | Claude Opus 5.5 / Sonnet 5.5 ＋ Qwen 7B（テキスト条件のみ） |
+
+```
+persona_xfer/data/        架空の4人物、判断項目（47場面・65項目）、Mini-IPIP 試訳、抽出・写像用の質問
+persona_xfer/items.py     人格定義の読み込み、真の回答（価値の重み＋文脈規則）、場面単位の分割、判断記録
+persona_xfer/prompts.py   条件ごとのプロンプト、判断記録の検索
+persona_xfer/steering.py  人物ベクトルの抽出、モデル間写像（リッジ／Procrustes）
+persona_xfer/backends/    hf（オープンウェイト）、anthropic_api（テキストのみ）、toy（較正用の合成モデル）
+persona_xfer/experiment.py  実行（段階1：テキスト条件とキャッシュ、段階2：ステアリング条件）
+persona_xfer/analysis.py  検定・同一性行列・識別率・判定、figures.py / report.py
+```

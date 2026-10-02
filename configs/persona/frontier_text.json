@@ -1,0 +1,16 @@
+{
+  "name": "Phase 2b フロンティアモデル（テキスト経路のみ）",
+  "out_dir": "results/persona/frontier_text",
+  "models": [
+    {"name": "claude-opus-5-5", "backend": "anthropic", "model": "claude-opus-5-5", "n_samples": 1, "effort": "low"},
+    {"name": "claude-sonnet-5-5", "backend": "anthropic", "model": "claude-sonnet-5-5", "n_samples": 1, "effort": "low"},
+    {"name": "qwen2.5-7b", "backend": "hf", "path": "Qwen/Qwen2.5-7B-Instruct", "dtype": "bf16", "batch_size": 8}
+  ],
+  "conditions": ["base", "prompt", "retrieval"],
+  "train_frac": 0.4,
+  "split_seed": 0,
+  "retrieval_k": 4,
+  "margin": 0.5,
+  "big5": true,
+  "nll": false
+}

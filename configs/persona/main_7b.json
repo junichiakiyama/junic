@@ -1,0 +1,38 @@
+{
+  "name": "Phase 2 本実験（7〜9B 級オープンモデル）",
+  "out_dir": "results/persona/main_7b",
+  "models": [
+    {"name": "llama3.1-8b", "backend": "hf", "path": "meta-llama/Llama-3.1-8B-Instruct", "dtype": "bf16", "batch_size": 8},
+    {"name": "qwen2.5-7b", "backend": "hf", "path": "Qwen/Qwen2.5-7B-Instruct", "dtype": "bf16", "batch_size": 8},
+    {"name": "qwen2.5-3b", "backend": "hf", "path": "Qwen/Qwen2.5-3B-Instruct", "dtype": "bf16", "batch_size": 8},
+    {"name": "gemma2-9b", "backend": "hf", "path": "google/gemma-2-9b-it", "dtype": "bf16", "batch_size": 4},
+    {"name": "mistral-7b", "backend": "hf", "path": "mistralai/Mistral-7B-Instruct-v0.3", "dtype": "bf16", "batch_size": 8}
+  ],
+  "conditions": ["base", "prompt", "retrieval", "steer_native", "steer_transfer", "steer_random",
+                 "retrieval+steer_native"],
+  "transfer_pairs": [
+    ["qwen2.5-3b", "qwen2.5-7b"],
+    ["llama3.1-8b", "qwen2.5-7b"],
+    ["qwen2.5-7b", "llama3.1-8b"],
+    ["llama3.1-8b", "gemma2-9b"],
+    ["qwen2.5-7b", "mistral-7b"]
+  ],
+  "layers_rel": [0.25, 0.35, 0.45, 0.55, 0.65, 0.75],
+  "alphas": "<Phase 1 の結果で確定させてから記入する（例: [0.5, 1, 2, 4, 8]）>",
+  "map_kind": "ridge",
+  "contrast": "neutral",
+  "train_frac": 0.4,
+  "split_seed": 0,
+  "retrieval_k": 4,
+  "margin": 0.5,
+  "big5": true,
+  "nll": true,
+  "criteria": {
+    "min_gain_vs_base": 0.10,
+    "min_identification": 0.80,
+    "min_big5_r": 0.60,
+    "max_ppl_ratio": 1.10,
+    "min_cross_model_diag_adv": 0.20,
+    "noninferiority_delta": 0.05
+  }
+}

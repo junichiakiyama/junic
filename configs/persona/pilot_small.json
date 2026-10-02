@@ -1,0 +1,22 @@
+{
+  "name": "Phase 1 パイロット（小型オープンモデル）",
+  "out_dir": "results/persona/pilot_small",
+  "models": [
+    {"name": "qwen2.5-1.5b", "backend": "hf", "path": "Qwen/Qwen2.5-1.5B-Instruct", "dtype": "bf16", "batch_size": 16},
+    {"name": "qwen2.5-3b", "backend": "hf", "path": "Qwen/Qwen2.5-3B-Instruct", "dtype": "bf16", "batch_size": 16},
+    {"name": "llama3.2-3b", "backend": "hf", "path": "meta-llama/Llama-3.2-3B-Instruct", "dtype": "bf16", "batch_size": 16}
+  ],
+  "conditions": ["base", "prompt", "retrieval", "steer_native", "steer_transfer", "steer_random",
+                 "retrieval+steer_native"],
+  "transfer_pairs": [["qwen2.5-1.5b", "qwen2.5-3b"], ["llama3.2-3b", "qwen2.5-3b"], ["qwen2.5-3b", "llama3.2-3b"]],
+  "layers_rel": [0.25, 0.35, 0.45, 0.55, 0.65, 0.75],
+  "alphas": [0.25, 0.5, 1, 2, 4, 8],
+  "map_kind": "ridge",
+  "contrast": "neutral",
+  "train_frac": 0.4,
+  "split_seed": 0,
+  "retrieval_k": 4,
+  "margin": 0.5,
+  "big5": true,
+  "nll": true
+}
